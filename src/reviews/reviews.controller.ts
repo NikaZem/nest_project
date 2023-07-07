@@ -1,10 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ParseIntPipe } from '@nestjs/common';
+import { 
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  ParseIntPipe,
+  UseInterceptors,
+  UploadedFile
+ } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { Review } from './entities/review.entity';
+import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 
 @ApiTags('Posts')
@@ -28,6 +42,7 @@ export class ReviewsController {
   }
 
   @Get(':id')
+  @UseInterceptors(LoggingInterceptor)
   findOne(@Param('id', ParseIntPipe) id: string) {
     return this.reviewsService.findOne(+id);
   }
@@ -41,4 +56,10 @@ export class ReviewsController {
   remove(@Param('id') id: string) {
     return this.reviewsService.remove(+id);
   }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+}
 }
