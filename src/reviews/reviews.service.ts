@@ -5,11 +5,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Review } from './entities/review.entity';
 
+
 @Injectable()
 export class ReviewsService {
   constructor(
     @InjectRepository(Review)
-    private reposirory: Repository<Review>
+    private repository: Repository<Review>
     ) { }
 
   create(createReviewDto: CreateReviewDto) {
@@ -17,18 +18,18 @@ export class ReviewsService {
   }
 
   findAll() {
-    return this.reposirory.find()
+    return this.repository.find()
   }
 
   findOne(id: number) {
-    return this.reposirory.findOneBy({ id })
+    return this.repository.findOneBy({ id })
   }
 
   update(id: number, updateReviewDto: UpdateReviewDto) {
-    return this.reposirory.save({...updateReviewDto, id})
+    return this.repository.save({...updateReviewDto, id})
   }
 
   async remove(id: number) {
-    await this.reposirory.delete(id)
+    await this.repository.delete(id)
   }
 }

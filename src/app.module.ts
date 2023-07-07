@@ -10,12 +10,12 @@ import { Review } from './reviews/entities/review.entity';
 import { ConfigModule } from '@nestjs/config';
 import { SpecialitiesModule } from './specialities/specialities.module';
 import { Speciality } from './specialities/entities/speciality.entity';
+import { AuthModule } from './auth/auth.module';
+
 
 
 @Module({
   imports: [
-     UsersModule,
-     ReviewsModule,
      ConfigModule.forRoot(),
      TypeOrmModule.forRoot({
       type: 'mysql',
@@ -30,6 +30,7 @@ import { Speciality } from './specialities/entities/speciality.entity';
      UsersModule,
      ReviewsModule,
      SpecialitiesModule,
+     AuthModule,
     ],
   controllers: [AppController],
   providers: [AppService],
