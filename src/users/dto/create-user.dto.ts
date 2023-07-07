@@ -1,4 +1,4 @@
-
+import * as Joi from 'joi';
 
 export class CreateUserDto {
   first_name: string;
@@ -7,4 +7,10 @@ export class CreateUserDto {
   password: string;
 }
 
+export const CreateUserSchema = Joi.object({
+  first_name: Joi.string().required(),
+  last_name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().required().min(6)
+});
 
