@@ -3,15 +3,23 @@ import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Review } from './entities/review.entity';
 
+
+@ApiTags('Posts')
+@ApiBearerAuth()
 @Controller('reviews')
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
+  @ApiResponse({ status: 201, description: 'Отзыв успешно добавлен', type: Review})
+  @ApiResponse({ status: 401, description: 'Неавторизовано'})
   @Post()
   create(@Body() createReviewDto: CreateReviewDto) {
     return this.reviewsService.create(createReviewDto);
   }
+
 
   @UseGuards(AuthGuard('jwt'))
   @Get()
