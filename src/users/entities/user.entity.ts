@@ -23,7 +23,7 @@ export class User {
     @Column()
     last_Name: string;
 
-    @Column({
+   /*  @Column({
         type: 'datetime'
     })
     birthday: Date;
@@ -39,7 +39,7 @@ export class User {
         enum: genderEnum
 
     })
-    gender: genderEnum;
+    gender: genderEnum; */
 
     @OneToMany(type => Review, review => review.user_id)
     reviews: Review[]

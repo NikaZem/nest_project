@@ -11,6 +11,8 @@ import { ConfigModule } from '@nestjs/config';
 import { SpecialitiesModule } from './specialities/specialities.module';
 import { Speciality } from './specialities/entities/speciality.entity';
 import { AuthModule } from './auth/auth.module';
+import { ModerationModule } from './moderation/moderation.module';
+import { BullModule } from '@nestjs/bull';
 
 
 
@@ -27,10 +29,17 @@ import { AuthModule } from './auth/auth.module';
       entities: [ User, Review, Speciality ],
       synchronize: true,
     }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379
+      }
+    }),
      UsersModule,
      ReviewsModule,
      SpecialitiesModule,
      AuthModule,
+     ModerationModule
     ],
   controllers: [AppController],
   providers: [AppService],
